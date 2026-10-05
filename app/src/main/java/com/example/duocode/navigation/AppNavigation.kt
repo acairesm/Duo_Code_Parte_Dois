@@ -36,6 +36,7 @@ import com.example.duocode.model.Questao
 import com.example.duocode.ui.screens.DetalheLinguagemScreen
 import com.example.duocode.ui.screens.LinguagensScreen
 import com.example.duocode.ui.screens.PerfilScreen
+import com.example.duocode.ui.screens.QuestoesScreen
 import com.example.duocode.ui.theme.DuoBg
 import com.example.duocode.ui.theme.DuoBlue
 import com.example.duocode.ui.theme.DuoCard
@@ -116,7 +117,7 @@ fun AppNavigation() {
         ) {
             composable(Rotas.TRILHA) { EmConstrucao() }
             composable(Rotas.LINGUAGENS) { LinguagensScreen(navController, linguagens, questoes) }
-            composable(Rotas.QUESTOES) { EmConstrucao() }
+            composable(Rotas.QUESTOES) { QuestoesScreen(linguagens, questoes) }
             composable(Rotas.PERFIL) { PerfilScreen() }
             composable(
                 route = Rotas.DETALHE_LINGUAGEM,
