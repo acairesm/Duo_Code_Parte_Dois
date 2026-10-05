@@ -173,11 +173,8 @@ fun DetalheLinguagemScreen(
                             fontSize = 13.sp,
                             modifier = Modifier.clickable {
                                 navController.navigate(Rotas.QUESTOES) {
-                                    popUpTo(navController.graph.findStartDestination().id) {
-                                        saveState = true
-                                    }
+                                    popUpTo(navController.graph.findStartDestination().id)
                                     launchSingleTop = true
-                                    restoreState = true
                                 }
                             }
                         )
