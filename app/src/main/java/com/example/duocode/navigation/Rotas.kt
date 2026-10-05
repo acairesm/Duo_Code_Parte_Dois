@@ -6,4 +6,5 @@ object Rotas {
     const val QUESTOES = "questoes"
     const val PERFIL = "perfil"
     const val DETALHE_LINGUAGEM = "detalhe_linguagem/{id}"
+    const val DETALHE_QUESTAO = "detalhe_questao/{id}"
 }

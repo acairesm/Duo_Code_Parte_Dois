@@ -2,6 +2,7 @@ package com.example.duocode.ui.screens
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -43,6 +44,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.duocode.model.Dificuldade
 import com.example.duocode.model.Linguagem
 import com.example.duocode.model.Questao
@@ -73,6 +75,7 @@ private fun corDaDificuldadeQuestao(dificuldade: Dificuldade): Color = when (dif
 
 @Composable
 fun QuestoesScreen(
+    navController: NavController,
     linguagens: SnapshotStateList<Linguagem>,
     questoes: SnapshotStateList<Questao>
 ) {
@@ -108,14 +111,13 @@ fun QuestoesScreen(
         item {
             NovaQuestaoFormulario(
                 linguagens = linguagens,
-                onAdicionar = { enunciado, linguagemId, dificuldade ->
+                onAdicionar = { enunciado, resposta, linguagemId, dificuldade ->
                     val novoId = (questoes.maxOfOrNull { it.id } ?: 0) + 1
-                    // O formulário do protótipo não tem campo de resposta
                     questoes.add(
                         Questao(
                             id = novoId,
                             enunciado = enunciado,
-                            resposta = "",
+                            resposta = resposta,
                             linguagemId = linguagemId,
                             dificuldade = dificuldade
                         )
@@ -137,6 +139,7 @@ fun QuestoesScreen(
             QuestaoCard(
                 questao = questao,
                 linguagem = linguagens.find { it.id == questao.linguagemId },
+                onAbrir = { navController.navigate("detalhe_questao/${questao.id}") },
                 onRemover = { questoes.remove(questao) }
             )
         }
@@ -147,9 +150,10 @@ fun QuestoesScreen(
 @Composable
 private fun NovaQuestaoFormulario(
     linguagens: List<Linguagem>,
-    onAdicionar: (enunciado: String, linguagemId: Int, dificuldade: Dificuldade) -> Unit
+    onAdicionar: (enunciado: String, resposta: String, linguagemId: Int, dificuldade: Dificuldade) -> Unit
 ) {
     var enunciado by remember { mutableStateOf("") }
+    var resposta by remember { mutableStateOf("") }
     var linguagemId by remember { mutableStateOf(linguagens.firstOrNull()?.id) }
     var dificuldade by remember { mutableStateOf(Dificuldade.FACIL) }
 
@@ -175,6 +179,20 @@ private fun NovaQuestaoFormulario(
                 onValueChange = { enunciado = it },
                 placeholder = { Text("ex: O que typeof null retorna?", color = DuoTextSecondary) },
                 minLines = 2,
+                shape = RoundedCornerShape(10.dp),
+                colors = coresCampoQuestao(),
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            Text("Resposta", color = DuoTextSecondary, fontSize = 13.sp)
+            Spacer(modifier = Modifier.height(6.dp))
+            OutlinedTextField(
+                value = resposta,
+                onValueChange = { resposta = it },
+                placeholder = { Text("ex: 4 (opcional)", color = DuoTextSecondary) },
+                singleLine = true,
                 shape = RoundedCornerShape(10.dp),
                 colors = coresCampoQuestao(),
                 modifier = Modifier.fillMaxWidth()
@@ -210,8 +228,9 @@ private fun NovaQuestaoFormulario(
             Button(
                 onClick = {
                     if (linguagemSelecionada != null) {
-                        onAdicionar(enunciado.trim(), linguagemSelecionada.id, dificuldade)
+                        onAdicionar(enunciado.trim(), resposta.trim(), linguagemSelecionada.id, dificuldade)
                         enunciado = ""
+                        resposta = ""
                     }
                 },
                 enabled = podeAdicionar,
@@ -286,14 +305,16 @@ private fun coresCampoQuestao() = OutlinedTextFieldDefaults.colors(
 )
 
 @Composable
-private fun QuestaoCard(questao: Questao, linguagem: Linguagem?, onRemover: () -> Unit) {
+private fun QuestaoCard(questao: Questao, linguagem: Linguagem?, onAbrir: () -> Unit, onRemover: () -> Unit) {
     val sigla = linguagem?.sigla ?: "?"
 
     Card(
         shape = RoundedCornerShape(14.dp),
         colors = CardDefaults.cardColors(containerColor = DuoCard),
         border = BorderStroke(1.dp, DuoCardBorder),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onAbrir() }
     ) {
         Row(
             modifier = Modifier.padding(start = 16.dp, top = 14.dp, bottom = 14.dp, end = 4.dp),

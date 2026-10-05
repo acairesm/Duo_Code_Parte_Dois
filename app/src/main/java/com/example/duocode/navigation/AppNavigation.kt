@@ -34,6 +34,7 @@ import com.example.duocode.model.Dificuldade
 import com.example.duocode.model.Linguagem
 import com.example.duocode.model.Questao
 import com.example.duocode.ui.screens.DetalheLinguagemScreen
+import com.example.duocode.ui.screens.DetalheQuestaoScreen
 import com.example.duocode.ui.screens.LinguagensScreen
 import com.example.duocode.ui.screens.PerfilScreen
 import com.example.duocode.ui.screens.QuestoesScreen
@@ -117,7 +118,7 @@ fun AppNavigation() {
         ) {
             composable(Rotas.TRILHA) { EmConstrucao() }
             composable(Rotas.LINGUAGENS) { LinguagensScreen(navController, linguagens, questoes) }
-            composable(Rotas.QUESTOES) { QuestoesScreen(linguagens, questoes) }
+            composable(Rotas.QUESTOES) { QuestoesScreen(navController, linguagens, questoes) }
             composable(Rotas.PERFIL) { PerfilScreen() }
             composable(
                 route = Rotas.DETALHE_LINGUAGEM,
@@ -125,6 +126,13 @@ fun AppNavigation() {
             ) { backStackEntry ->
                 val id = backStackEntry.arguments?.getInt("id") ?: -1
                 DetalheLinguagemScreen(navController, id, linguagens, questoes)
+            }
+            composable(
+                route = Rotas.DETALHE_QUESTAO,
+                arguments = listOf(navArgument("id") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val id = backStackEntry.arguments?.getInt("id") ?: -1
+                DetalheQuestaoScreen(navController, id, linguagens, questoes)
             }
         }
     }
