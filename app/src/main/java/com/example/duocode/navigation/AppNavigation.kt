@@ -111,7 +111,7 @@ fun AppNavigation() {
     ) { innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = Rotas.LINGUAGENS,
+            startDestination = Rotas.TRILHA,
             modifier = Modifier.padding(innerPadding)
         ) {
             composable(Rotas.TRILHA) { TrilhaScreen(navController) }

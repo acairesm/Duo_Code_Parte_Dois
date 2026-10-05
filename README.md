@@ -15,7 +15,7 @@ App Android de quiz para programadores, no estilo Duolingo, feito em Kotlin com 
    ```
    git clone https://github.com/acairesm/Duo_Code_Parte_Dois.git
    ```
-3. Abra a pasta `DuoCode` no Android Studio e aguarde o Gradle Sync terminar (ele baixa sozinho o Navigation Compose e os ícones estendidos do Material usados pelo app).
+3. Abra a pasta `Duo_Code_Parte_Dois` no Android Studio e aguarde o Gradle Sync terminar (ele baixa sozinho o Navigation Compose e os ícones estendidos do Material usados pelo app).
 4. Escolha um emulador (ou conecte um celular com depuração USB ativada) e clique em **Run ▶** (ou `Shift+F10`).
 
 ## Telas
@@ -50,4 +50,5 @@ Nada é persistido (sem Room/DataStore): as listas vivem em memória e se perdem
 
 ## Documentação
 
-O processo de decisões do trio, com prints do app, está em [`DuoCode_Documentacao_T2.pdf`](./DuoCode_Documentacao_T2.pdf), nesta mesma raiz do repositório.
+O processo e as decisões do trio, com prints do código e dos protótipos, estão em
+[`DuoCode_Documentacao_T2.pdf`](./DuoCode_Documentacao_T2.pdf), nesta mesma raiz do repositório.

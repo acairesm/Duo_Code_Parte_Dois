@@ -225,8 +225,7 @@ fun DetalheLinguagemScreen(
             Spacer(modifier = Modifier.height(10.dp))
 
             Button(
-                // TODO: trocar por Rotas.PERGUNTA quando a tela de pergunta for migrada do Trabalho 1
-                onClick = { navController.navigate(Rotas.TRILHA) },
+                onClick = { navController.navigate(Rotas.PERGUNTA) },
                 shape = RoundedCornerShape(14.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = DuoBlue, contentColor = DuoBg),
                 modifier = Modifier
