@@ -50,5 +50,6 @@ Nada é persistido (sem Room/DataStore): as listas vivem em memória e se perdem
 
 ## Documentação
 
-O processo e as decisões do trio, com prints do código e dos protótipos, estão em
+O processo e as decisões do trio, com prints do app rodando no emulador, estão em
+[`PROCESSO.md`](./PROCESSO.md). Os slides da apresentação estão em
 [`DuoCode_Documentacao_T2.pdf`](./DuoCode_Documentacao_T2.pdf), nesta mesma raiz do repositório.
