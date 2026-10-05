@@ -24,12 +24,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.duocode.model.Dificuldade
 import com.example.duocode.model.Linguagem
 import com.example.duocode.model.Questao
+import com.example.duocode.ui.screens.DetalheLinguagemScreen
 import com.example.duocode.ui.screens.LinguagensScreen
 import com.example.duocode.ui.screens.PerfilScreen
 import com.example.duocode.ui.theme.DuoBg
@@ -53,13 +57,23 @@ fun AppNavigation() {
 
     val linguagens = remember {
         mutableStateListOf(
-            Linguagem(id = 1, nome = "JavaScript", sigla = "JS"),
-            Linguagem(id = 2, nome = "Python", sigla = "PY"),
-            Linguagem(id = 3, nome = "Kotlin", sigla = "KT"),
-            Linguagem(id = 4, nome = "SQL", sigla = "SQL")
+            Linguagem(id = 1, nome = "JavaScript", sigla = "JS", descricao = "Web, front-end e Node"),
+            Linguagem(id = 2, nome = "Python", sigla = "PY", descricao = "Scripts, dados e automação"),
+            Linguagem(id = 3, nome = "Kotlin", sigla = "KT", descricao = "Android nativo"),
+            Linguagem(id = 4, nome = "SQL", sigla = "SQL", descricao = "Consultas e bancos relacionais")
         )
     }
-    val questoes = remember { mutableStateListOf<Questao>() }
+    val questoes = remember {
+        mutableStateListOf(
+            Questao(1, "Qual é a saída de arr.length após arr.push(4)?", "4", linguagemId = 1, dificuldade = Dificuldade.FACIL, resolvida = true),
+            Questao(2, "Qual a diferença entre let e const?", "const não pode ser reatribuída", linguagemId = 1, dificuldade = Dificuldade.FACIL, resolvida = true),
+            Questao(3, "O que [1, 2, 3].map(x => x * 2) retorna?", "[2, 4, 6]", linguagemId = 1, dificuldade = Dificuldade.MEDIO),
+            Questao(4, "Qual a ordem de execução do event loop?", "call stack, microtasks, macrotasks", linguagemId = 1, dificuldade = Dificuldade.DIFICIL),
+            Questao(5, "O que len(\"dev\") retorna?", "3", linguagemId = 2, dificuldade = Dificuldade.FACIL),
+            Questao(6, "Qual palavra-chave declara um valor imutável em Kotlin?", "val", linguagemId = 3, dificuldade = Dificuldade.MEDIO),
+            Questao(7, "Qual cláusula filtra grupos depois de um GROUP BY?", "HAVING", linguagemId = 4, dificuldade = Dificuldade.DIFICIL)
+        )
+    }
 
     Scaffold(
         containerColor = DuoBg,
@@ -104,7 +118,13 @@ fun AppNavigation() {
             composable(Rotas.LINGUAGENS) { LinguagensScreen(navController, linguagens, questoes) }
             composable(Rotas.QUESTOES) { EmConstrucao() }
             composable(Rotas.PERFIL) { PerfilScreen() }
-            composable(Rotas.DETALHE_LINGUAGEM) { EmConstrucao() }
+            composable(
+                route = Rotas.DETALHE_LINGUAGEM,
+                arguments = listOf(navArgument("id") { type = NavType.IntType })
+            ) { backStackEntry ->
+                val id = backStackEntry.arguments?.getInt("id") ?: -1
+                DetalheLinguagemScreen(navController, id, linguagens, questoes)
+            }
         }
     }
 }
