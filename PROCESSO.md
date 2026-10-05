@@ -13,7 +13,6 @@ Os slides da apresentação estão em [`DuoCode_Documentacao_T2.pdf`](./DuoCode_
 3. [Decisões de configuração e organização do código](#3-decisões-de-configuração-e-organização-do-código)
 4. [A complexidade extra nas telas de Detalhes](#4-a-complexidade-extra-nas-telas-de-detalhes)
 5. [Dificuldades e como resolvemos](#5-dificuldades-e-como-resolvemos)
-6. [Linha do tempo dos commits](#6-linha-do-tempo-dos-commits)
 
 ---
 
@@ -202,24 +201,4 @@ val resolvidas = questoesDaLinguagem.count { it.resolvida }
 
 **Brenno** — *Escolher linguagem e dificuldade num formulário Compose; o protótipo nem tinha campo de resposta.* Criou um `Seletor` genérico com `ExposedDropdownMenuBox`, usado nos dois campos. O campo de resposta entrou depois.
 
-**Como o trio trabalhou:** cada tela foi feita numa branch própria e entrou na `main` por Pull Request (#1 a #4).
-
----
-
-## 6. Linha do tempo dos commits
-
-| Quando | Quem | Commit | O que entrou |
-|---|---|---|---|
-| 02/10 14:07 | André | `8423fc6` | Estrutura (Rotas, AppNavigation, abas) + Perfil e Linguagens |
-| 05/10 10:06 | Gustavo | `231c725` | Detalhe da linguagem: progresso, dificuldade e criar questão |
-| 05/10 10:21 | Gustavo | `b3f4fac` | Merge do PR #1 |
-| 05/10 13:24 | Brenno | `3449c87` | Questões: formulário, lista e remoção |
-| 05/10 13:26 | Brenno | `41f083a` | Merge do PR #2 |
-| 05/10 13:39 | André | `205f158` | Detalhe da questão: linguagem, resposta e resolvida |
-| 05/10 13:41 | André | `e7edfd5` | Merge do PR #3 |
-| 05/10 13:56 | André | `104dc71` | Trilha, Pergunta e Resultado evoluídas do Trabalho 1 |
-| 05/10 13:58 | André | `33a9736` | Merge da branch `telas-trabalho1` |
-| 05/10 14:10 | André | `53e0d20` | README e slides da documentação |
-| 05/10 14:22 | André | `09234f0` | "Praticar" abre o quiz e o app abre na Trilha |
-| 05/10 15:11 | Gustavo | `5137df7` | Abas da barra sempre abrem a tela principal |
-| 05/10 15:15 | Gustavo | `c6c493d` | Merge do PR #4 |
+**Como o trio trabalhou:** depois da estrutura inicial, cada parte foi feita numa branch própria e juntada na `main`, a maioria por Pull Request.
