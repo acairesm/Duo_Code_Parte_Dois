@@ -88,11 +88,8 @@ fun AppNavigation() {
                         selected = selecionada,
                         onClick = {
                             navController.navigate(aba.rota) {
-                                popUpTo(navController.graph.findStartDestination().id) {
-                                    saveState = true
-                                }
+                                popUpTo(navController.graph.findStartDestination().id)
                                 launchSingleTop = true
-                                restoreState = true
                             }
                         },
                         icon = { Icon(aba.icone, contentDescription = aba.label) },
