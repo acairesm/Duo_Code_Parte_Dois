@@ -1,8 +1,5 @@
 package com.example.duocode.navigation
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
@@ -19,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -37,11 +33,13 @@ import com.example.duocode.ui.screens.DetalheLinguagemScreen
 import com.example.duocode.ui.screens.DetalheQuestaoScreen
 import com.example.duocode.ui.screens.LinguagensScreen
 import com.example.duocode.ui.screens.PerfilScreen
+import com.example.duocode.ui.screens.PerguntaScreen
 import com.example.duocode.ui.screens.QuestoesScreen
+import com.example.duocode.ui.screens.ResultadoScreen
+import com.example.duocode.ui.screens.TrilhaScreen
 import com.example.duocode.ui.theme.DuoBg
 import com.example.duocode.ui.theme.DuoBlue
 import com.example.duocode.ui.theme.DuoCard
-import com.example.duocode.ui.theme.DuoText
 import com.example.duocode.ui.theme.DuoTextSecondary
 
 private data class AbaNav(val rota: String, val label: String, val icone: androidx.compose.ui.graphics.vector.ImageVector)
@@ -116,7 +114,19 @@ fun AppNavigation() {
             startDestination = Rotas.LINGUAGENS,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Rotas.TRILHA) { EmConstrucao() }
+            composable(Rotas.TRILHA) { TrilhaScreen(navController) }
+            composable(Rotas.PERGUNTA) { PerguntaScreen(navController) }
+            composable(
+                route = Rotas.RESULTADO,
+                arguments = listOf(
+                    navArgument("acertos") { type = NavType.IntType },
+                    navArgument("total") { type = NavType.IntType }
+                )
+            ) { backStackEntry ->
+                val acertos = backStackEntry.arguments?.getInt("acertos") ?: 0
+                val total = backStackEntry.arguments?.getInt("total") ?: 0
+                ResultadoScreen(navController, acertos, total)
+            }
             composable(Rotas.LINGUAGENS) { LinguagensScreen(navController, linguagens, questoes) }
             composable(Rotas.QUESTOES) { QuestoesScreen(navController, linguagens, questoes) }
             composable(Rotas.PERFIL) { PerfilScreen() }
@@ -135,18 +145,5 @@ fun AppNavigation() {
                 DetalheQuestaoScreen(navController, id, linguagens, questoes)
             }
         }
-    }
-}
-
-@Composable
-private fun EmConstrucao() {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(DuoBg)
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
-    ) {
-        Text("Em construção", color = DuoText)
     }
 }
